@@ -23,7 +23,3 @@ run:
 submodules:
 	git submodule update --init --recursive
 	git pull --recurse-submodules --jobs=8
-
-.PHONY: tidy
-tidy: configure
-	cd build && run-clang-tidy '^((?!/libs/).)*$$' -fix &>/dev/null
