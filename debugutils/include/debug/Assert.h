@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Log.h"
+#include "Trace.h"
 
 #include <cstdlib>
 #include <ostream>
@@ -29,7 +29,7 @@
 #define ASSERT(condition, message)                                             \
   do {                                                                         \
     if (!(condition)) {                                                        \
-      debug::Log(debug::Log::Level::Error)                                     \
+      debug::trace(debug::TraceError)                                          \
           << "Assertion (" << #condition << ") failed at " << __FILE__ << "("  \
           << __LINE__ << "): " << message << std::endl;                        \
       DEBUG_ABORT();                                                           \
