@@ -1,19 +1,19 @@
-CC = clang
-CXX = clang++
-
-BUILD_TYPE = Release
-BUILD_TESTS = OFF
+SICKMIND_CC ?= clang
+SICKMIND_CXX ?= clang++
+SICKMIND_GENERATOR ?= Ninja
+SICKMIND_BUILD_TYPE ?= Release
+SICKMIND_BUILD_TESTS ?= OFF
 
 .PHONY: configure
 configure:
-	CC=$(CC) CXX=$(CXX) cmake -S . -B build -G Ninja \
-		-D CMAKE_BUILD_TYPE=$(BUILD_TYPE) \
+	CC=$(SICKMIND_CC) CXX=$(SICKMIND_CXX) cmake -S . -B build -G "$(SICKMIND_GENERATOR)" \
+		-D CMAKE_BUILD_TYPE=$(SICKMIND_BUILD_TYPE) \
 		-D CMAKE_EXPORT_COMPILE_COMMANDS=ON \
-		-D SICKMIND_BUILD_TESTS=$(BUILD_TESTS)
+		-D SICKMIND_BUILD_TESTS=$(SICKMIND_BUILD_TESTS)
 
 .PHONY: build
 build: configure
-	cmake --build build --config $(BUILD_TYPE) --parallel
+	cmake --build build --config $(SICKMIND_BUILD_TYPE) --parallel
 
 .PHONY: clean
 clean:
@@ -25,9 +25,9 @@ run: build
 	./build/install/sickmind
 
 .PHONY: test
-test: BUILD_TESTS = ON
+test: SICKMIND_BUILD_TESTS = ON
 test: build
-	./build/install/sickmind
+	ctest --output-on-failure --test-dir build -C $(SICKMIND_BUILD_TYPE)
 
 .PHONY: submodules
 submodules:

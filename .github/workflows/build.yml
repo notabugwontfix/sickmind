@@ -1,106 +1,53 @@
 name: Build
-
 on:
   pull_request:
   push:
     branches: [ master, develop ]
   workflow_dispatch:
-
-env:
-  BUILD_TYPE: Release
-
 jobs:
-  build-linux-x11-gcc:
-    name: X11 (Linux, GCC)
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      matrix:
+        job:
+          - os: ubuntu-latest
+            compiler: { c: gcc, cpp: g++ }
+            generator: Unix Makefiles
+          - os: ubuntu-latest
+            compiler: { c: clang, cpp: clang++ }
+            generator: Unix Makefiles
+          - os: macos-latest
+            compiler: { c: gcc, cpp: g++ }
+            generator: Unix Makefiles
+          - os: macos-latest
+            compiler: { c: clang, cpp: clang++ }
+            generator: Unix Makefiles
+          - os: windows-latest
+            compiler: { c: cl, cpp: cl }
+            generator: Visual Studio 17 2022
+          - os: windows-latest
+            compiler: { c: clang, cpp: clang++ }
+            generator: Ninja
+    name: ${{ matrix.job.os }} ${{ matrix.job.compiler.c }} ${{ matrix.job.generator }}
+    runs-on: ${{ matrix.job.os }}
     env:
-      CC: gcc
-      CXX: g++
+      SICKMIND_CC: ${{ matrix.job.compiler.c }}
+      SICKMIND_CXX: ${{ matrix.job.compiler.cxx }}
+      SICKMIND_GENERATOR: ${{ matrix.job.generator }}
+      SICKMIND_BUILD_TYPE: Release
+      SICKMIND_BUILD_TESTS: ON
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
         with:
           submodules: recursive
-      - name: Install dependencies
+      - if: matrix.job.os == 'ubuntu-latest'
+        name: Install dependencies
         run: |
           sudo apt update
           sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev libglew-dev
       - name: Configure
-        run: cmake -S . -B build -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D SICKMIND_BUILD_TESTS=ON
+        run: make configure
       - name: Build
-        run: cmake --build build --parallel --config ${{env.BUILD_TYPE}}
+        run: make build
       - name: Test
-        run: ctest --output-on-failure --test-dir build
-
-  build-linux-x11-clang:
-    name: X11 (Linux, Clang)
-    runs-on: ubuntu-latest
-    env:
-      CC: clang
-      CXX: clang++
-    steps:
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev libglew-dev
-      - name: Configure
-        run: cmake -S . -B build -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D SICKMIND_BUILD_TESTS=ON
-      - name: Build
-        run: cmake --build build --parallel --config ${{env.BUILD_TYPE}}
-      - name: Test
-        run: ctest --output-on-failure --test-dir build
-
-  build-macos-cocoa-clang:
-    name: Cocoa (macOS, Clang)
-    runs-on: macos-latest
-    env:
-      CC: clang
-      CXX: clang++
-    steps:
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-      - name: Configure
-        run: cmake -S . -B build -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D SICKMIND_BUILD_TESTS=ON
-      - name: Build
-        run: cmake --build build --parallel --config ${{env.BUILD_TYPE}}
-      - name: Test
-        run: ctest --output-on-failure --test-dir build
-
-  build-windows-win32-vs2022:
-    name: Win32 (Windows, VS2022)
-    runs-on: windows-latest
-    steps:
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-      - name: Configure
-        run: cmake -S . -B build -G "Visual Studio 17 2022" -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D SICKMIND_BUILD_TESTS=ON
-      - name: Build
-        run: cmake --build build --parallel --config ${{env.BUILD_TYPE}}
-      - name: Test
-        run: ctest --output-on-failure --test-dir build -C ${{env.BUILD_TYPE}}
-
-  build-windows-win32-clang:
-    name: Win32 (Windows, Clang)
-    runs-on: windows-latest
-    env:
-      CC: clang
-      CXX: clang++
-    steps:
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-      - name: Configure
-        run: cmake -S . -B build -G Ninja -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D SICKMIND_BUILD_TESTS=ON
-      - name: Build
-        run: cmake --build build --parallel --config ${{env.BUILD_TYPE}}
-      - name: Test
-        run: ctest --output-on-failure --test-dir build
+        run: make test
