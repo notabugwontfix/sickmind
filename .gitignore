@@ -2,6 +2,7 @@
 .vs/
 .vscode/
 .cmake/
+Testing/
 CMakeLists.txt.user
 build/
 out/

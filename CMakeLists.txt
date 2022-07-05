@@ -24,6 +24,16 @@ set(TARGET_PROPERTIES
     CXX_STANDARD_REQUIRED ON
 )
 
+# Testing
+option(SICKMIND_BUILD_TESTS "sickmind: Build tests" OFF)
+if(SICKMIND_BUILD_TESTS)
+    enable_testing()
+    add_test(NAME sickmind-test COMMAND sickmind)
+else()
+    add_compile_definitions(DOCTEST_CONFIG_DISABLE)
+endif()
+
 # Modules
 add_subdirectory(libs)
+add_subdirectory(debugutils)
 add_subdirectory(app)
