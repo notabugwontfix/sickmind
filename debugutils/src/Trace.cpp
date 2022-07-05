@@ -58,7 +58,7 @@ SCENARIO("trace level check") {
     WHEN("trace Fatal") {
       debug::Trace(debug::TraceFatal, trace_max_level, ss) << "message";
 
-      THEN("trace is empty") { CHECK(ss.str() == ""); }
+      THEN("trace is empty") { CHECK(ss.str().empty()); }
     }
   }
 
@@ -96,7 +96,7 @@ SCENARIO("trace level check") {
     WHEN("trace max Warn") {
       debug::Trace(debug::TraceWarn, trace_max_level, ss) << "message";
 
-      THEN("trace is empty") { CHECK(ss.str() == ""); }
+      THEN("trace is empty") { CHECK(ss.str().empty()); }
     }
   }
 }
@@ -121,7 +121,7 @@ SCENARIO("trace default level") {
     WHEN("trace Debug") {
       debug::trace(debug::TraceDebug) << "message";
 
-      THEN("trace is empty") { CHECK(ss.str() == ""); }
+      THEN("trace is empty") { CHECK(ss.str().empty()); }
     }
   }
 }
@@ -130,25 +130,30 @@ TEST_CASE("trace level prefix") {
   std::stringstream ss;
   constexpr auto trace_max_level = debug::TraceAll;
 
-  debug::Trace(debug::TraceFatal, trace_max_level, ss) << "message";
-  CHECK(ss.str() == "[FATAL]: message\n");
-  ss.str("");
+  SUBCASE("trace fatal") {
+    debug::Trace(debug::TraceFatal, trace_max_level, ss) << "message";
+    CHECK(ss.str() == "[FATAL]: message\n");
+  }
 
-  debug::Trace(debug::TraceError, trace_max_level, ss) << "message";
-  CHECK(ss.str() == "[ERROR]: message\n");
-  ss.str("");
+  SUBCASE("trace error") {
+    debug::Trace(debug::TraceError, trace_max_level, ss) << "message";
+    CHECK(ss.str() == "[ERROR]: message\n");
+  }
 
-  debug::Trace(debug::TraceWarn, trace_max_level, ss) << "message";
-  CHECK(ss.str() == "[WARN]: message\n");
-  ss.str("");
+  SUBCASE("trace warn") {
+    debug::Trace(debug::TraceWarn, trace_max_level, ss) << "message";
+    CHECK(ss.str() == "[WARN]: message\n");
+  }
 
-  debug::Trace(debug::TraceInfo, trace_max_level, ss) << "message";
-  CHECK(ss.str() == "[INFO]: message\n");
-  ss.str("");
+  SUBCASE("trace info") {
+    debug::Trace(debug::TraceInfo, trace_max_level, ss) << "message";
+    CHECK(ss.str() == "[INFO]: message\n");
+  }
 
-  debug::Trace(debug::TraceDebug, trace_max_level, ss) << "message";
-  CHECK(ss.str() == "[DEBUG]: message\n");
-  ss.str("");
+  SUBCASE("trace debug") {
+    debug::Trace(debug::TraceDebug, trace_max_level, ss) << "message";
+    CHECK(ss.str() == "[DEBUG]: message\n");
+  }
 }
 
 TEST_CASE("trace adding new line") {
@@ -156,5 +161,4 @@ TEST_CASE("trace adding new line") {
 
   debug::Trace(debug::TraceFatal, debug::TraceAll, ss) << "message";
   CHECK(ss.str() == "[FATAL]: message\n");
-  ss.str("");
 }
