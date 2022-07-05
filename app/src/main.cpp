@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 
+#include <debug/Assert.h>
 #include <debug/Trace.h>
 
 #include <iostream>
@@ -22,5 +23,6 @@ auto main(int argc, char **argv) -> int {
 
 auto app(int /*argc*/, char ** /*argv*/) -> int {
   debug::trace(debug::TraceInfo) << "Hello, World!";
+  ASSERT(false, "Hello, World!");
   return EXIT_SUCCESS;
 }

@@ -31,7 +31,7 @@
     if (!(condition)) {                                                        \
       debug::trace(debug::TraceError)                                          \
           << "Assertion (" << #condition << ") failed at " << __FILE__ << "("  \
-          << __LINE__ << "): " << message << std::endl;                        \
+          << __LINE__ << "): " << message;                                     \
       DEBUG_ABORT();                                                           \
     }                                                                          \
   } while (false)
