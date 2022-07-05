@@ -16,9 +16,6 @@ jobs:
             compiler: { c: clang, cpp: clang++ }
             generator: Unix Makefiles
           - os: macos-latest
-            compiler: { c: gcc, cpp: g++ }
-            generator: Unix Makefiles
-          - os: macos-latest
             compiler: { c: clang, cpp: clang++ }
             generator: Unix Makefiles
           - os: windows-latest
@@ -45,5 +42,9 @@ jobs:
         run: |
           sudo apt update
           sudo apt install libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxext-dev libglew-dev
+      - name: Configure
+        run: make configure
+      - name: Build
+        run: make build
       - name: Test
         run: make test
