@@ -52,7 +52,7 @@ auto Trace::level_prefix() const -> std::string {
 SCENARIO("trace level check") {
   std::stringstream ss;
 
-  GIVEN("trace max level = None") {
+  GIVEN("max trace level = None") {
     constexpr auto trace_max_level = debug::TraceNone;
 
     WHEN("trace Fatal") {
@@ -62,7 +62,7 @@ SCENARIO("trace level check") {
     }
   }
 
-  GIVEN("trace max level = All") {
+  GIVEN("max trace level = All") {
     constexpr auto trace_max_level = debug::TraceAll;
 
     WHEN("trace Debug") {
@@ -74,7 +74,7 @@ SCENARIO("trace level check") {
     }
   }
 
-  GIVEN("trace max level = Error") {
+  GIVEN("max trace level = Error") {
     constexpr auto trace_max_level = debug::TraceError;
 
     WHEN("trace Error") {
@@ -85,7 +85,7 @@ SCENARIO("trace level check") {
       }
     }
 
-    WHEN("trace max Fatal") {
+    WHEN("trace Fatal") {
       debug::Trace(debug::TraceFatal, trace_max_level, ss) << "message";
 
       THEN("trace has FATAL prefix") {
@@ -93,7 +93,7 @@ SCENARIO("trace level check") {
       }
     }
 
-    WHEN("trace max Warn") {
+    WHEN("trace Warn") {
       debug::Trace(debug::TraceWarn, trace_max_level, ss) << "message";
 
       THEN("trace is empty") { CHECK(ss.str().empty()); }
@@ -101,11 +101,11 @@ SCENARIO("trace level check") {
   }
 }
 
-SCENARIO("trace default level") {
+SCENARIO("default trace level") {
   std::stringstream ss;
   debug::TraceDefaults::set_output(ss);
 
-  GIVEN("trace default level = Info") {
+  GIVEN("default trace level = Info") {
     WHEN("trace Info") {
       debug::trace(debug::TraceInfo) << "message";
 
@@ -130,35 +130,45 @@ TEST_CASE("trace level prefix") {
   std::stringstream ss;
   constexpr auto trace_max_level = debug::TraceAll;
 
-  SUBCASE("trace fatal") {
+  SUBCASE("trace Fatal") {
     debug::Trace(debug::TraceFatal, trace_max_level, ss) << "message";
     CHECK(ss.str() == "[FATAL]: message\n");
   }
 
-  SUBCASE("trace error") {
+  SUBCASE("trace Error") {
     debug::Trace(debug::TraceError, trace_max_level, ss) << "message";
     CHECK(ss.str() == "[ERROR]: message\n");
   }
 
-  SUBCASE("trace warn") {
+  SUBCASE("trace Warn") {
     debug::Trace(debug::TraceWarn, trace_max_level, ss) << "message";
     CHECK(ss.str() == "[WARN]: message\n");
   }
 
-  SUBCASE("trace info") {
+  SUBCASE("trace Info") {
     debug::Trace(debug::TraceInfo, trace_max_level, ss) << "message";
     CHECK(ss.str() == "[INFO]: message\n");
   }
 
-  SUBCASE("trace debug") {
+  SUBCASE("trace Debug") {
     debug::Trace(debug::TraceDebug, trace_max_level, ss) << "message";
     CHECK(ss.str() == "[DEBUG]: message\n");
   }
 }
 
-TEST_CASE("trace adding new line") {
+TEST_CASE("trace new line") {
   std::stringstream ss;
 
   debug::Trace(debug::TraceFatal, debug::TraceAll, ss) << "message";
   CHECK(ss.str() == "[FATAL]: message\n");
+}
+
+TEST_CASE("trace level underlying value") {
+  CHECK(static_cast<debug::TraceLevel>(0) == debug::TraceNone);
+  CHECK(static_cast<debug::TraceLevel>(1) == debug::TraceFatal);
+  CHECK(static_cast<debug::TraceLevel>(2) == debug::TraceError);
+  CHECK(static_cast<debug::TraceLevel>(3) == debug::TraceWarn);
+  CHECK(static_cast<debug::TraceLevel>(4) == debug::TraceInfo);
+  CHECK(static_cast<debug::TraceLevel>(5) == debug::TraceDebug);
+  CHECK(static_cast<debug::TraceLevel>(6) == debug::TraceAll);
 }
