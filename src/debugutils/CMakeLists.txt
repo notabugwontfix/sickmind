@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 project(debugutils)
 
-# Main target
 add_library(${PROJECT_NAME} src/Trace.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 target_link_libraries(${PROJECT_NAME} PRIVATE doctest)

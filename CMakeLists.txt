@@ -35,5 +35,4 @@ endif()
 
 # Modules
 add_subdirectory(libs)
-add_subdirectory(debugutils)
-add_subdirectory(app)
+add_subdirectory(src)

@@ -31,5 +31,5 @@ test: build
 
 .PHONY: submodules
 submodules:
-	git submodule update --init --recursive
-	git pull --recurse-submodules --jobs=8
+	git submodule update --init --recursive --jobs 4
+	git pull --recurse-submodules --jobs 4
