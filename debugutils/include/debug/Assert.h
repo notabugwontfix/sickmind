@@ -21,7 +21,7 @@
 #endif
 #endif
 
-#ifdef NDEBUG
+#if defined(NDEBUG)
 #define DEBUG_ABORT()
 #else
 #define DEBUG_ABORT()                                                          \

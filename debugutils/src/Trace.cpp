@@ -1,10 +1,9 @@
 #include <debug/Trace.h>
 
-#include <iostream>
-
 namespace debug {
 
-Trace::Trace(TraceLevel level, TraceLevel max_level, std::ostream &output)
+Trace::Trace(TraceLevel level, TraceLevel max_level, // NOLINT
+             std::ostream &output)
     : m_level{level}, m_max_level{max_level}, m_output{output} {
 
   if (check_level()) {
@@ -48,6 +47,8 @@ auto Trace::level_prefix() const -> std::string {
 #include <doctest/doctest.h>
 
 #include <sstream>
+
+// NOLINTBEGIN
 
 SCENARIO("trace level check") {
   std::stringstream ss;
@@ -172,3 +173,5 @@ TEST_CASE("trace level underlying value") {
   CHECK(static_cast<debug::TraceLevel>(5) == debug::TraceDebug);
   CHECK(static_cast<debug::TraceLevel>(6) == debug::TraceAll);
 }
+
+// NOLINTEND

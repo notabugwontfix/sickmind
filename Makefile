@@ -4,8 +4,6 @@ CXX = clang++
 BUILD_TYPE = Release
 BUILD_TESTS = OFF
 
-test: BUILD_TESTS = ON
-
 .PHONY: configure
 configure:
 	CC=$(CC) CXX=$(CXX) cmake -S . -B build -G Ninja \
@@ -15,7 +13,7 @@ configure:
 
 .PHONY: build
 build: configure
-	cmake --build build --parallel
+	cmake --build build --config $(BUILD_TYPE) --parallel
 
 .PHONY: clean
 clean:
@@ -27,6 +25,7 @@ run: build
 	./build/install/sickmind
 
 .PHONY: test
+test: BUILD_TESTS = ON
 test: build
 	./build/install/sickmind
 
