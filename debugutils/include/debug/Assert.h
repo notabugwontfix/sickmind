@@ -5,15 +5,20 @@
 #include <cstdlib>
 #include <ostream>
 
-#if defined(__has_builtin) && __has_builtin(__builtin_debugtrap)
+#if defined(__has_builtin)
+#if __has_builtin(__builtin_debugtrap)
 #define DEBUG_BREAK() __builtin_debugtrap()
-#elif _WIN32
+#endif
+#endif
+#if !defined(DEBUG_BREAK)
+#if _WIN32
 #define DEBUG_BREAK() __debugbreak()
 #elif __has_include(<signal.h>)
 #include <signal.h>
 #define DEBUG_BREAK() raise(SIGTRAP)
 #else
 #define DEBUG_BREAK()
+#endif
 #endif
 
 #ifdef NDEBUG
