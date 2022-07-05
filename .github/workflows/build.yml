@@ -83,7 +83,7 @@ jobs:
       - name: Build
         run: cmake --build build --parallel --config ${{env.BUILD_TYPE}}
       - name: Test
-        run: ctest --output-on-failure --test-dir build
+        run: ctest --output-on-failure --test-dir build -C ${{env.BUILD_TYPE}}
 
   build-windows-win32-clang:
     name: Win32 (Windows, Clang)
