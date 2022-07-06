@@ -30,7 +30,7 @@ run: build
 .PHONY: test
 test: SICKMIND_BUILD_TESTS = ON
 test: build
-	ctest --output-on-failure --test-dir build -C $(SICKMIND_BUILD_TYPE)
+	./build/install/sickmind
 
 .PHONY: submodules
 submodules:
