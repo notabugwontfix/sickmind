@@ -3,7 +3,7 @@ project(debugutils)
 
 add_library(${PROJECT_NAME}
     src/Trace.cpp
-    # src/Stopwatch.cpp
+    src/Stopwatch.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC include)
