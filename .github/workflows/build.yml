@@ -24,6 +24,9 @@ jobs:
           - os: windows-latest
             compiler: { c: clang, cpp: clang++ }
             generator: Ninja
+          - os: windows-latest
+            compiler: { c: gcc, cpp: g++ }
+            generator: Ninja
     name: ${{ matrix.job.os }} ${{ matrix.job.compiler.c }} ${{ matrix.job.generator }}
     runs-on: ${{ matrix.job.os }}
     env:
