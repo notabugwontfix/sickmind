@@ -16,7 +16,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL GNU OR
     set(TARGET_COMPILE_OPTIONS -Wall -Wextra -Werror -Wpedantic)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL MSVC)
 
-    set(TARGET_COMPILE_OPTIONS /Wall /WX)
+    set(TARGET_COMPILE_OPTIONS /Wall /WX /utf-8)
 endif()
 
 # Global target properties
