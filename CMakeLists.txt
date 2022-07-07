@@ -33,6 +33,10 @@ else()
     add_compile_definitions(DOCTEST_CONFIG_DISABLE)
 endif()
 
+# Apply patches
+find_package(Git REQUIRED)
+execute_process(COMMAND ./scripts/apply-patches.sh)
+
 # 3rd-party libs
 add_subdirectory(libs)
 
