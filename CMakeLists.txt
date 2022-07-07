@@ -33,6 +33,8 @@ else()
     add_compile_definitions(DOCTEST_CONFIG_DISABLE)
 endif()
 
-# Modules
+# 3rd-party libs
 add_subdirectory(libs)
+
+# Internal libs
 add_subdirectory(src)

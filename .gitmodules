@@ -10,3 +10,9 @@
 [submodule "libs/doctest"]
 	path = libs/doctest
 	url = https://github.com/doctest/doctest
+[submodule "libs/freetype"]
+	path = libs/freetype
+	url = https://gitlab.freedesktop.org/freetype/freetype
+[submodule "libs/harfbuzz"]
+	path = libs/harfbuzz
+	url = https://github.com/harfbuzz/harfbuzz

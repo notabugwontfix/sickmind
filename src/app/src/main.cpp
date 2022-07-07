@@ -5,6 +5,8 @@
 #include <debug/Stopwatch.h>
 #include <debug/Trace.h>
 
+#include <hb-ft.h>
+
 #include <iostream>
 
 auto app(int /*argc*/, char ** /*argv*/) -> int;

@@ -8,6 +8,8 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE glm
 
     PRIVATE doctest
+    PRIVATE freetype
+    PRIVATE harfbuzz
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES ${TARGET_PROPERTIES})
