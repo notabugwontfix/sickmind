@@ -9,7 +9,7 @@ target_link_libraries(${PROJECT_NAME}
 
     PRIVATE doctest
     PRIVATE freetype
-    PRIVATE harfbuzz
+    PRIVATE harfbuzz-icu
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES ${TARGET_PROPERTIES})

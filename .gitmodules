@@ -16,3 +16,6 @@
 [submodule "libs/harfbuzz"]
 	path = libs/harfbuzz
 	url = https://github.com/harfbuzz/harfbuzz
+[submodule "libs/icu/icu"]
+	path = libs/icu/icu
+	url = https://github.com/unicode-org/icu

@@ -6,6 +6,7 @@
 #include <debug/Trace.h>
 
 #include <hb-ft.h>
+#include <hb-icu.h>
 
 #include <iostream>
 
