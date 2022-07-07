@@ -19,8 +19,7 @@ build: configure
 	cmake --build build --config $(SICKMIND_BUILD_TYPE) --parallel
 
 .PHONY: clean
-clean:
-	git submodule foreach --recursive git reset --hard
+clean: reset-submodules
 	rm -rf build
 
 .PHONY: run
@@ -43,5 +42,9 @@ submodules:
 	git pull --recurse-submodules --jobs 4
 
 .PHONY: update-submodules
-update-submodules:
+update-submodules: reset-submodules
 	git submodule foreach git pull
+
+.PHONY: reset-submodules
+reset-submodules:
+	git submodule foreach --recursive git reset --hard
