@@ -9,8 +9,6 @@ export CXX = $(SICKMIND_CXX)
 
 .PHONY: configure
 configure:
-	git submodule foreach --recursive git reset --hard
-
 	cmake -S . -B build -G "$(SICKMIND_GENERATOR)" \
 		-D CMAKE_BUILD_TYPE=$(SICKMIND_BUILD_TYPE) \
 		-D CMAKE_EXPORT_COMPILE_COMMANDS=ON \
@@ -41,4 +39,5 @@ submodules:
 
 .PHONY: patches
 patches:
+	- ./scripts/apply-patches.sh
 	./scripts/make-patches.sh
