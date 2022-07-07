@@ -32,12 +32,16 @@ test: SICKMIND_BUILD_TESTS = ON
 test: build
 	ctest --output-on-failure --test-dir build -C $(SICKMIND_BUILD_TYPE)
 
+.PHONY: patches
+patches:
+	- ./scripts/apply-patches.sh
+	./scripts/make-patches.sh
+
 .PHONY: submodules
 submodules:
 	git submodule update --init --recursive --jobs 4
 	git pull --recurse-submodules --jobs 4
 
-.PHONY: patches
-patches:
-	- ./scripts/apply-patches.sh
-	./scripts/make-patches.sh
+.PHONY: update-submodules
+update-submodules:
+	git submodule foreach git pull
