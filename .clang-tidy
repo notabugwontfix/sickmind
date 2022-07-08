@@ -15,3 +15,5 @@ Checks: >-
 
 WarningsAsErrors: >-
     *
+
+HeaderFilterRegex: '^((?!/libs/).)*$'
