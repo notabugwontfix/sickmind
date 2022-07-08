@@ -3,6 +3,7 @@ Checks: >-
     clang-*,
     concurrency-*,
     cppcoreguidelines-*,
+    fuchsia-*,
     google-*,
     hicpp-*,
     linuxkernel-*,
