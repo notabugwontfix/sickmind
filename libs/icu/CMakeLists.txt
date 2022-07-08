@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.22)
 project(icuuc)
 
+# https://unicode-org.github.io/icu/userguide/icu/howtouseicu.html#c-with-your-own-build-system
+
 set(ICU_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/icu/icu4c/source)
 set(INCLUDE_DIR ${ICU_SRC_DIR}/common)
 
@@ -8,6 +10,7 @@ set(ICU_INCLUDE_DIR ${INCLUDE_DIR} PARENT_SCOPE)
 set(ICU_LIBRARY ${PROJECT_NAME} PARENT_SCOPE)
 
 add_library(${PROJECT_NAME}
+    # icuuc
     ${ICU_SRC_DIR}/common/appendable.cpp
     ${ICU_SRC_DIR}/common/bmpset.cpp
     ${ICU_SRC_DIR}/common/brkeng.cpp
@@ -206,6 +209,8 @@ add_library(${PROJECT_NAME}
     ${ICU_SRC_DIR}/common/uvectr32.cpp
     ${ICU_SRC_DIR}/common/uvectr64.cpp
     ${ICU_SRC_DIR}/common/wintz.cpp
+
+    # icudt
     ${ICU_SRC_DIR}/stubdata/stubdata.cpp
 )
 
