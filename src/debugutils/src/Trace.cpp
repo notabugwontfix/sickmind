@@ -1,5 +1,9 @@
 #include <debug/Trace.h>
 
+#include <doctest/doctest.h>
+
+#include <sstream>
+
 namespace debug {
 
 Trace::Trace(TraceLevel level, TraceLevel max_level, // NOLINT
@@ -43,10 +47,6 @@ auto Trace::level_prefix() const -> std::string {
 }
 
 } // namespace debug
-
-#include <doctest/doctest.h>
-
-#include <sstream>
 
 // NOLINTBEGIN
 

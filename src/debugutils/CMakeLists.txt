@@ -2,7 +2,12 @@ cmake_minimum_required(VERSION 3.22)
 project(debugutils)
 
 add_library(${PROJECT_NAME}
+    include/debug/Assert.h
+
+    include/debug/Trace.h
     src/Trace.cpp
+
+    include/debug/Stopwatch.h
     src/Stopwatch.cpp
 )
 
