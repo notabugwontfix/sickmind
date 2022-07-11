@@ -32,7 +32,7 @@ public:
   Trace(Trace &&) = delete;
   auto operator=(Trace &&) -> Trace & = delete;
 
-  template <typename T> auto operator<<(const T &value) -> Trace & { // NOLINT
+  template <typename T> auto operator<<(T &&value) -> Trace & { // NOLINT
     if (check_level()) {
       m_output << value; // NOLINT
     }

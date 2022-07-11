@@ -1,3 +1,6 @@
+cmake_minimum_required(VERSION 3.22)
+project(app)
+
 add_executable(${PROJECT_NAME} src/main.cpp)
 
 target_link_libraries(${PROJECT_NAME}
@@ -12,5 +15,5 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE harfbuzz-icu
 )
 
-set_target_properties(${PROJECT_NAME} PROPERTIES ${TARGET_PROPERTIES})
-target_compile_options(${PROJECT_NAME} PRIVATE ${TARGET_COMPILE_OPTIONS})
+# Rename executable
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "sickmind")

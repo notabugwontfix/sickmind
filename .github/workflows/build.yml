@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ matrix.job.os }}
     env:
       SICKMIND_CC: ${{ matrix.job.compiler.c }}
-      SICKMIND_CXX: ${{ matrix.job.compiler.cxx }}
+      SICKMIND_CXX: ${{ matrix.job.compiler.cpp }}
       SICKMIND_GENERATOR: ${{ matrix.job.generator }}
       SICKMIND_BUILD_TYPE: Release
       SICKMIND_BUILD_TESTS: ON
