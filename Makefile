@@ -1,35 +1,37 @@
 SICKMIND_CC ?= clang
 SICKMIND_CXX ?= clang++
 SICKMIND_GENERATOR ?= Ninja
-SICKMIND_BUILD_TYPE ?= Release
+SICKMIND_BUILD_TYPE ?= Debug
 SICKMIND_BUILD_TESTS ?= OFF
 
 export CC = $(SICKMIND_CC)
 export CXX = $(SICKMIND_CXX)
 
+BUILD_DIR = "build/$(SICKMIND_BUILD_TYPE)"
+
 .PHONY: configure
 configure:
-	cmake -S . -B build -G "$(SICKMIND_GENERATOR)" \
-		-D CMAKE_BUILD_TYPE=$(SICKMIND_BUILD_TYPE) \
+	cmake -S . -B $(BUILD_DIR) -G "$(SICKMIND_GENERATOR)" \
+		-D CMAKE_BUILD_TYPE="$(SICKMIND_BUILD_TYPE)" \
 		-D CMAKE_EXPORT_COMPILE_COMMANDS=ON \
-		-D SICKMIND_BUILD_TESTS=$(SICKMIND_BUILD_TESTS)
+		-D SICKMIND_BUILD_TESTS="$(SICKMIND_BUILD_TESTS)"
 
 .PHONY: build
 build: configure
-	cmake --build build --config $(SICKMIND_BUILD_TYPE) --parallel
+	cmake --build $(BUILD_DIR) --config "$(SICKMIND_BUILD_TYPE)" --parallel
 
 .PHONY: clean
-clean: reset-submodules
-	rm -rf build
+clean:
+	rm -rf "$(BUILD_DIR)"
 
 .PHONY: run
 run: build
-	./build/install/sickmind
+	./$(BUILD_DIR)/install/sickmind
 
 .PHONY: test
 test: SICKMIND_BUILD_TESTS = ON
 test: build
-	ctest --output-on-failure --test-dir build -C $(SICKMIND_BUILD_TYPE)
+	ctest --output-on-failure --test-dir $(BUILD_DIR) -C "$(SICKMIND_BUILD_TYPE)"
 
 .PHONY: patches
 patches:
