@@ -43,6 +43,8 @@ auto Trace::level_prefix() const -> std::string {
   case TraceLevel::Debug: {
     return "[DEBUG]";
   } break;
+  case TraceLevel::None:
+  case TraceLevel::All:
   default: {
     return "[UNKNOWN]";
   }
