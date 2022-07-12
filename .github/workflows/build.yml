@@ -18,9 +18,9 @@ jobs:
           - os: macos-latest
             compiler: { c: clang, cpp: clang++ }
             generator: Unix Makefiles
-          # - os: windows-latest
-          #   compiler: { c: cl, cpp: cl }
-          #   generator: Visual Studio 17 2022
+          - os: windows-latest
+            compiler: { c: cl, cpp: cl }
+            generator: Visual Studio 17 2022
           - os: windows-latest
             compiler: { c: clang, cpp: clang++ }
             generator: Ninja
@@ -32,6 +32,7 @@ jobs:
       SICKMIND_GENERATOR: ${{ matrix.job.generator }}
       SICKMIND_BUILD_TYPE: Release
       SICKMIND_BUILD_TESTS: ON
+      VERBOSE: 1
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3

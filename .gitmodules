@@ -12,7 +12,7 @@
 	url = https://github.com/doctest/doctest
 [submodule "libs/freetype"]
 	path = libs/freetype
-	url = https://gitlab.freedesktop.org/freetype/freetype
+	url = https://github.com/freetype/freetype
 [submodule "libs/harfbuzz"]
 	path = libs/harfbuzz
 	url = https://github.com/harfbuzz/harfbuzz
