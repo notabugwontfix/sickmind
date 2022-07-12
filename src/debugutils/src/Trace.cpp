@@ -30,19 +30,19 @@ auto Trace::level_prefix() const -> std::string {
   switch (m_level) {
   case TraceLevel::Fatal: {
     return "[FATAL]";
-  } break;
+  }
   case TraceLevel::Error: {
     return "[ERROR]";
-  } break;
+  }
   case TraceLevel::Warn: {
     return "[WARN]";
-  } break;
+  }
   case TraceLevel::Info: {
     return "[INFO]";
-  } break;
+  }
   case TraceLevel::Debug: {
     return "[DEBUG]";
-  } break;
+  }
   case TraceLevel::None:
   case TraceLevel::All:
   default: {
