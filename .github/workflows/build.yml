@@ -2,7 +2,7 @@ name: Build
 on:
   pull_request:
   push:
-    branches: [ master, develop ]
+    branches: [master, develop]
   workflow_dispatch:
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
           - os: windows-latest
             compiler: { c: clang, cpp: clang++ }
             generator: Ninja
-    name: ${{ matrix.job.os }} ${{ matrix.job.compiler.c }} ${{ matrix.job.generator }}
+    name: ${{ matrix.job.os }} ${{ matrix.job.compiler.cpp }} ${{ matrix.job.generator }}
     runs-on: ${{ matrix.job.os }}
     env:
       SICKMIND_CC: ${{ matrix.job.compiler.c }}
