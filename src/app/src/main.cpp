@@ -27,7 +27,7 @@ auto main(int argc, char **argv) -> int {
 
 auto app(int /*argc*/, char ** /*argv*/) -> int {
   debug::Stopwatch stopwatch{"stopwatch"};
-  debug::trace(debug::TraceInfo) << "Hello, World!";
+  debug::Trace(debug::TraceInfo) << "Hello, World!";
   ASSERT(false, "Hello, World!");
   return EXIT_SUCCESS;
 }

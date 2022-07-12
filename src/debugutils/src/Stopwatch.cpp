@@ -9,7 +9,7 @@ Stopwatch::Stopwatch(std::string name)
 Stopwatch::~Stopwatch() {
   const auto now = std::chrono::steady_clock::now();
 
-  trace(TraceInfo) << "Stopwatch " << m_name << ": "
+  Trace(TraceInfo) << "Stopwatch " << m_name << ": "
                    << std::chrono::duration_cast<std::chrono::microseconds>(
                           now - m_start)
                           .count()

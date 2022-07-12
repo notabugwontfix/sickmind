@@ -35,7 +35,7 @@
 #define ASSERT(condition, message)                                             \
   do {                                                                         \
     if (!(condition)) {                                                        \
-      debug::trace(debug::TraceError)                                          \
+      debug::Trace(debug::TraceError)                                          \
           << "Assertion (" << #condition << ") failed at " << __FILE__ << "("  \
           << __LINE__ << "): " << message;                                     \
       DEBUG_ABORT();                                                           \

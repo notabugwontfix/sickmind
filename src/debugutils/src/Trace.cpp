@@ -21,6 +21,9 @@ Trace::~Trace() {
   }
 }
 
+void Trace::set_max_level(TraceLevel max_level) { s_max_level = max_level; }
+void Trace::set_output(std::ostream &output) { s_output = &output; }
+
 auto Trace::check_level() const -> bool { return m_level <= m_max_level; }
 
 auto Trace::level_prefix() const -> std::string {
@@ -104,23 +107,23 @@ SCENARIO("trace level check") {
 
 SCENARIO("default trace level") {
   std::stringstream ss;
-  debug::TraceDefaults::set_output(ss);
+  debug::Trace::set_output(ss);
 
   GIVEN("default trace level = Info") {
     WHEN("trace Info") {
-      debug::trace(debug::TraceInfo) << "message";
+      debug::Trace(debug::TraceInfo) << "message";
 
       THEN("trace has INFO prefix") { CHECK(ss.str() == "[INFO]: message\n"); }
     }
 
     WHEN("trace Warn") {
-      debug::trace(debug::TraceWarn) << "message";
+      debug::Trace(debug::TraceWarn) << "message";
 
       THEN("trace has WARN prefix") { CHECK(ss.str() == "[WARN]: message\n"); }
     }
 
     WHEN("trace Debug") {
-      debug::trace(debug::TraceDebug) << "message";
+      debug::Trace(debug::TraceDebug) << "message";
 
       THEN("trace is empty") { CHECK(ss.str().empty()); }
     }

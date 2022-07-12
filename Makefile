@@ -48,3 +48,8 @@ update-submodules: reset-submodules
 .PHONY: reset-submodules
 reset-submodules:
 	git submodule foreach --recursive git reset --hard
+
+.PHONY: clang-format
+clang-format:
+	git ls-files -- '*.cpp' '*.h' | xargs clang-format -i -style=file
+	git diff --exit-code --color

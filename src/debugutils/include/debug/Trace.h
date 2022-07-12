@@ -24,13 +24,12 @@ inline constexpr auto TraceAll = TraceLevel::All;
 
 class Trace {
 public:
-  explicit Trace(TraceLevel level, TraceLevel max_level, std::ostream &output);
+  explicit Trace(TraceLevel level, TraceLevel max_level = s_max_level,
+                 std::ostream &output = *s_output);
   ~Trace();
 
-  Trace(const Trace &) = delete;
-  auto operator=(const Trace &) -> Trace & = delete;
-  Trace(Trace &&) = delete;
-  auto operator=(Trace &&) -> Trace & = delete;
+  static void set_max_level(TraceLevel max_level);
+  static void set_output(std::ostream &output);
 
   template <typename T> auto operator<<(T &&value) -> Trace & { // NOLINT
     if (check_level()) {
@@ -41,6 +40,11 @@ public:
   }
 
 private:
+  // NOLINTBEGIN
+  static inline auto s_max_level = TraceLevel::Info;
+  static inline auto *s_output = &std::cout;
+  // NOLINTEND
+
   const TraceLevel m_level;
   const TraceLevel m_max_level;
   std::ostream &m_output;
@@ -48,25 +52,5 @@ private:
   [[nodiscard]] auto check_level() const -> bool;
   [[nodiscard]] auto level_prefix() const -> std::string;
 };
-
-class TraceDefaults {
-public:
-  static void set_max_level(TraceLevel max_level) { s_max_level = max_level; }
-  static void set_output(std::ostream &output) { s_output = &output; }
-
-  [[nodiscard]] static inline auto trace(TraceLevel level) -> Trace {
-    return Trace{level, s_max_level, *s_output};
-  }
-
-private:
-  // NOLINTBEGIN
-  static inline auto s_max_level = TraceLevel::Info;
-  static inline auto *s_output = &std::cout;
-  // NOLINTEND
-};
-
-[[nodiscard]] inline auto trace(TraceLevel level) -> Trace {
-  return TraceDefaults::trace(level);
-}
 
 } // namespace debug
