@@ -31,9 +31,9 @@ public:
   static void set_max_level(TraceLevel max_level);
   static void set_output(std::ostream &output);
 
-  template <typename T> auto operator<<(T &&value) -> Trace & { // NOLINT
+  template <typename T> auto operator<<(T &&value) -> Trace & {
     if (check_level()) {
-      m_output << value; // NOLINT
+      m_output << value;
     }
 
     return *this;
