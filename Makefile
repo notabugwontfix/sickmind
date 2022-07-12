@@ -22,7 +22,7 @@ build: configure
 
 .PHONY: clean
 clean:
-	rm -rf "$(BUILD_DIR)"
+	rm -rf $(BUILD_DIR)
 
 .PHONY: run
 run: build
